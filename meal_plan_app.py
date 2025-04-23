@@ -1,4 +1,3 @@
-
 import os
 import streamlit as st
 from dotenv import load_dotenv
@@ -6,10 +5,10 @@ from openai import OpenAI
 
 # ---------- Configuration ----------
 load_dotenv()  # Load environment variables from a .env file, if present
-api_key = os.getenv("OPENAI_API_KEY")  # Make sure this is set in your environment
+api_key = os.getenv("OPENAI_API_KEY")  # Ensure this is set via .streamlit/secrets.toml or your environment
 
 if not api_key:
-    st.error("OPENAI_API_KEY environment variable not found. Please set it before running the app.")
+    st.error("OPENAI_API_KEY environment variable not found. Please set it in your environment or in Streamlit Secrets.")
     st.stop()
 
 client = OpenAI(api_key=api_key)
@@ -38,7 +37,7 @@ Your weekly task is to generate a rotating 7-day dinner plan, custom-built for a
 • Conventional oven
 • Kettle
 • Blender
-• Slow cooker ( must be eaten on a Tuesaday, Wednesday, Thursday or Friday. Label dishes accordingly)
+• Slow cooker (must be eaten on a Tuesday, Wednesday, Thursday or Friday—label accordingly)
 
 === INGREDIENT GUIDELINES ===
 • Use ingredients commonly available in Australian supermarkets (e.g., Coles, Woolworths).
@@ -77,14 +76,13 @@ st.title("Weekly Dinner Plan Generator")
 with st.expander("🔧 Adjust Prompt (optional)"):
     user_prompt = st.text_area("Prompt Text:", BASE_PROMPT, height=500)
 
-temperature = st.slider("Creativity (temperature)", 0.0, 1.0, 0.7, 0.05)
+# Note: Removed the temperature slider since model 'o3' does not support customizable temperature
 
 if st.button("Generate Meal Plan"):
     with st.spinner("Cooking up your plan..."):
         response = client.chat.completions.create(
             model="o3",
             messages=[{"role": "system", "content": user_prompt}],
-            temperature=temperature,
         )
         plan = response.choices[0].message.content
 
