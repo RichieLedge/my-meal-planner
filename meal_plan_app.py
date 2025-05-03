@@ -13,6 +13,44 @@ if not api_key:
 
 client = OpenAI(api_key=api_key)
 
+# ---------- Custom Styles ----------
+st.markdown(
+    """
+    <style>
+    /* Page background and text colors */
+    .reportview-container, .css-18e3th9 {
+        background-color: #000000;
+        color: #FFFFFF;
+    }
+    /* Button styling */
+    .stButton>button {
+        background-color: #FF7700;
+        color: #000000;
+        border: 2px solid #00FFCC; /* hyper teal accent */
+        border-radius: 12px;
+        padding: 0.5em 1.5em;
+        font-size: 1.1em;
+        font-weight: bold;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    }
+    .stButton>button:hover {
+        background-color: #FF8A33;
+        border-color: #00E6B8;
+    }
+    /* Expander header color */
+    .css-1v3fvcr {
+        background-color: #1A1A1A;
+        color: #FF7700;
+    }
+    /* Link colors */
+    a {
+        color: #00FFCC;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 # ---------- Prompt Template ----------
 BASE_PROMPT = """You are my personal AI meal-planning assistant. Your are a world renowned planner and family Cook with years of Expertise and experience in family cooking.
 
@@ -75,8 +113,6 @@ st.title("Weekly Dinner Plan Generator")
 
 with st.expander("🔧 Adjust Prompt (optional)"):
     user_prompt = st.text_area("Prompt Text:", BASE_PROMPT, height=500)
-
-# Note: Removed the temperature slider since model 'o3' does not support customizable temperature
 
 if st.button("Generate Meal Plan"):
     with st.spinner("Cooking up your plan..."):
