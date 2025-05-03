@@ -3,6 +3,9 @@ import streamlit as st
 from dotenv import load_dotenv
 from openai import OpenAI
 
+# ---------- Streamlit Page Configuration ----------
+st.set_page_config(page_title="Weekly Dinner Plan Generator", page_icon="🍲")
+
 # ---------- Configuration ----------
 load_dotenv()  # Load environment variables from a .env file, if present
 api_key = os.getenv("OPENAI_API_KEY")  # Ensure this is set via .streamlit/secrets.toml or your environment
@@ -108,7 +111,6 @@ Return ONLY the following Markdown table. Do not include any introductions, nutr
 Each time this prompt is run, generate a fresh and unique meal plan following the above instructions."""
 
 # ---------- Streamlit UI ----------
-st.set_page_config(page_title="Weekly Dinner Plan Generator", page_icon="🍲")
 st.title("Weekly Dinner Plan Generator")
 
 with st.expander("🔧 Adjust Prompt (optional)"):
